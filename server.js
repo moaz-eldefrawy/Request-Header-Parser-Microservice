@@ -3,24 +3,27 @@
 
 // init project
 var express = require('express');
-var app = express();
+var device = require('express-device');
 
+var app = express();
+app.use(device.capture());
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'))
 
-var answer = {name: "moaz"};
+var answer = {};
 app.get('*', function(req, res){
   console.log(req);
-  answer.ipAddress = req.headers['x-forwarded-for'].substring(0, 10);
+  answer.Your_ipAddress = req.headers['x-forwarded-for'].substring(0, 10);
   var s = req.headers['user-agent'].indexOf('(');
   var e = req.headers['user-agent'].indexOf(')');
-  answer.software = req.headers['user-agent'].substring(s + 1,e);
-  answer.langauge = req.headers['accept-language'].substring(0,5);
+  answer.Your_Software = req.headers['user-agent'].substring(s + 1,e);
+  answer.Your_Browser_Langauge = req.headers['accept-language'].substring(0,5);
+  answer.Using = req.device.type;
   res.writeHead(200, {'Content-Type': "application/json"})
-  res.end(answer);
+  res.end(JSON.stringify(answer));
   
 });
 
