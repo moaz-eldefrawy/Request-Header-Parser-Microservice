@@ -11,8 +11,10 @@ var app = express();
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'))
 
+var obj = {name: "moaz"};
 app.get('*', function(req, res){
-  
+  console.log(req);
+  res.send(JSON.stringify(req.params));
 });
 
 
