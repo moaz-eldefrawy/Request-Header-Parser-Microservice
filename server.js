@@ -15,8 +15,12 @@ var answer = {name: "moaz"};
 app.get('*', function(req, res){
   console.log(req);
   answer.ipAddress = req.headers['x-forwarded-for'].substring(0, 10);
-  var a = req.headers['user-agent']
-  res.end(a.toStiing());
+  var s = req.headers['user-agent'].indexOf('(');
+  var e = req.headers['user-agent'].indexOf(')');
+  answer.software = req.headers['user-agent'].substring(s + 1,e);
+  answer.langauge = req.headers['accept-language'].substring(0,5);
+  res.writeHead(200, {'Content-Type': "application/json"})
+  res.end(answer);
   
 });
 
