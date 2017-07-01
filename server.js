@@ -15,13 +15,12 @@ app.use(express.static('public'))
 
 var answer = {};
 app.get('*', function(req, res){
-  console.log(req);
   answer.Your_ipAddress = req.headers['x-forwarded-for'].substring(0, 10);
   var s = req.headers['user-agent'].indexOf('(');
   var e = req.headers['user-agent'].indexOf(')');
   answer.Your_Software = req.headers['user-agent'].substring(s + 1,e);
   answer.Your_Browser_Langauge = req.headers['accept-language'].substring(0,5);
-  answer.Using = req.device.type;
+  answer.You_are_using = req.device.type;
   res.writeHead(200, {'Content-Type': "application/json"})
   res.end(JSON.stringify(answer));
   
